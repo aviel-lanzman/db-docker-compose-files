@@ -1,0 +1,17 @@
+# To run this file run:
+# docker-compose -f mongo.docker-compose.yml up -d
+
+version: '3.8'
+services:
+  mongodb:
+    container_name: mongodb
+    restart: always
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data/mongodb:/data/db
+    env_file:
+      - .env
+volumes:
+  mongodb-data:

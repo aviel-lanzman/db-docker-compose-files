@@ -1,0 +1,19 @@
+# To run this file run:
+# docker-compose -f redis.docker-compose.yml up -d
+
+version: '3.8'
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - '6379:6379'
+    command: /bin/sh -c "redis-server --requirepass $$PASSWORD"
+    volumes: 
+      - ./data/redis:/data
+    env_file:
+      - .env
+volumes:
+  redis:
+    driver: local

@@ -1,0 +1,34 @@
+# To run this file run:
+# docker-compose -f mysql.docker-compose.yml up -d
+
+version: '3.8'
+
+services:
+  mysql-server:
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: $$PASSWORD
+      MYSQL_DATABASE: example
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    env_file:
+        - .env
+  phpmyadmin:
+    container_name: php-my-admin
+    image: phpmyadmin:latest
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mysql-server
+      PMA_USER: root
+      PMA_PASSWORD: $$PASSWORD
+    env_file:
+        - .env
+
+volumes:
+  mysql:
